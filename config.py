@@ -20,8 +20,8 @@ class EasyDict(dict):
 #----------------------------------------------------------------------------
 # Paths.
 
-data_dir = os.environ['PT_DATA_DIR']
-result_dir = os.environ['PT_OUTPUT_DIR'] + r'/results'
+data_dir = '/mnt/pgan_data'#os.environ['PT_DATA_DIR']
+result_dir = '/mnt/pgan_experiments'
 
 #----------------------------------------------------------------------------
 # TensorFlow options.
