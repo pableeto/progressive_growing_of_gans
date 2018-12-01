@@ -131,6 +131,8 @@ class TrainingSchedule:
 # To run, comment/uncomment appropriate lines in config.py and launch train.py.
 
 def train_progressive_gan(
+    n_D                     = 1,            # number of discrimintors.
+    data_to_D_list          = [0],          # mapping each dataset to discrimintors.
     G_smoothing             = 0.999,        # Exponential running average of generator weights.
     D_repeats               = 1,            # How many times the discriminator is trained per G iteration.
     minibatch_repeats       = 4,            # Number of minibatches to run before adjusting training parameters.
@@ -148,7 +150,7 @@ def train_progressive_gan(
     resume_time             = 0.0):         # Assumed wallclock time at the beginning. Affects reporting.
 
     maintenance_start_time = time.time()
-    training_set = dataset.load_dataset(data_dir=config.data_dir, verbose=True, **config.dataset)
+    training_set = dataset.load_dataset_multi(data_dir=config.data_dir, verbose=True, **config.dataset)
 
     # Construct networks.
     with tf.device('/gpu:0'):
