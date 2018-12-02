@@ -80,7 +80,18 @@ def save_image(image, filename, drange=[0,1], quality=95):
         img.save(filename)
 
 def save_image_grid(images, filename, drange=[0,1], grid_size=None):
-    convert_to_pil_image(create_image_grid(images, grid_size), drange).save(filename)
+    image_grid = create_image_grid(images, grid_size)
+    if(len(image_grid.shape) == 4 and image_grid.shape[-1] > 3):
+        image_grid_tex = image_grid[...,0:3]
+        image_grid_roughness = image_grid[...,3]
+        image_grid_normal = image_grid[...,4:7]
+
+        name, extension = os.path.splitext(filename)
+        convert_to_pil_image(image_grid, drange).save(name + r'_tex' + extension)
+        convert_to_pil_image(image_grid, drange).save(name + r'_roughness' + extension)
+        convert_to_pil_image(image_grid, drange).save(name + r'_normal' + extension)
+    else:
+        convert_to_pil_image(image_grid, drange).save(filename)
 
 #----------------------------------------------------------------------------
 # Logging of stdout and stderr to a file.
