@@ -629,6 +629,8 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
         error('No input images found')
         
     img_raw = np.asarray(PIL.Image.open(image_filenames[0]))
+    print(img_raw.shape)
+    input()
     resolution = img_raw.shape[0]
     img = np.concatenate([
         img_raw[:, resolution:2*resolution], 
