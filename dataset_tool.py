@@ -636,6 +636,8 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
         img_raw[:, 2*resolution:3*resolution]
     ], axis = -1)
     channels = img.shape[2] if img.ndim == 3 else 1
+    print(img.shape)
+    input()    
     if img.shape[1] != resolution:
         error('Input images must have the same width and height')
     if resolution != 2 ** int(np.floor(np.log2(resolution))):
@@ -651,8 +653,6 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
                 img = img[np.newaxis, :, :] # HW => CHW
             else:
                 img = img.transpose(2, 0, 1) # HWC => CHW
-            print(img.shape)
-            input()
             tfr.add_image(img)
 
 #----------------------------------------------------------------------------
