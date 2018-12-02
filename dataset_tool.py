@@ -630,23 +630,8 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
     if len(image_filenames) == 0:
         error('No input images found')
     
-    print(image_filenames[0])
     img = np.asarray(PIL.Image.open(image_filenames[0]))
-    cv2.imwrite('/mnt/pgan_experiments/test_full.jpg', img[...,::-1])
     resolution = img.shape[0]
-
-    print(img.shape)
-
-    img_1 = np.concatenate([
-        img[:, 0:resolution], 
-        img[:, 2*resolution:3*resolution,0:1],
-        img[:, resolution:2*resolution]
-    ], axis = -1)
-    cv2.imwrite('/mnt/pgan_experiments/test_0.jpg', img_1[...,0:3][...,::-1])
-    cv2.imwrite('/mnt/pgan_experiments/test_1.jpg', img_1[...,3][...,::-1])
-    cv2.imwrite('/mnt/pgan_experiments/test_2.jpg', img_1[...,4:7][...,::-1])    
-
-    input()
     
     channels = 7 #if img.ndim == 3 else 1
 
