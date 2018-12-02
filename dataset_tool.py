@@ -646,6 +646,7 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
         order = tfr.choose_shuffled_order() if shuffle else np.arange(len(image_filenames))
         for idx in range(order.size):
             img_raw = np.asarray(PIL.Image.open(image_filenames[order[idx]]))
+            cv2.imwrite('/mnt/pgan_experiments/test_full.jpg', img_raw[...,::-1])
             img = np.concatenate([
                 img_raw[:, resolution:2*resolution], 
                 img_raw[:, 3*resolution:4*resolution,0:1],
