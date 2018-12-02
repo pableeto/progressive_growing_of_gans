@@ -19,6 +19,8 @@ import PIL.Image
 import tfutil
 import dataset
 
+import cv2
+
 #----------------------------------------------------------------------------
 
 def error(msg):
@@ -650,6 +652,9 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
                 img_raw[:, 2*resolution:3*resolution]
             ], axis = -1)
             print(img.shape)
+            cv2.imwrite('/mnt/pgan_experiments/test_0.jpg', img[...,0:3])
+            cv2.imwrite('/mnt/pgan_experiments/test_1.jpg', img[...,3])
+            cv2.imwrite('/mnt/pgan_experiments/test_2.jpg', img[...,4:7])
             input()            
             if channels == 1:
                 img = img[np.newaxis, :, :] # HW => CHW
