@@ -633,6 +633,8 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
     print(image_filenames[0])
     img = np.asarray(PIL.Image.open(image_filenames[0]))
     cv2.imwrite('/mnt/pgan_experiments/test_full.jpg', img[...,::-1])
+    resolution = img.shape[0]
+    
     img_1 = np.concatenate([
         img[:, resolution:2*resolution], 
         img[:, 3*resolution:4*resolution,0:1],
@@ -643,7 +645,7 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
     cv2.imwrite('/mnt/pgan_experiments/test_2.jpg', img_1[...,4:7][...,::-1])    
 
     input()
-    resolution = img.shape[0]
+    
     channels = 7 #if img.ndim == 3 else 1
 
     # if img.shape[1] != resolution:
