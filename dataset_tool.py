@@ -632,17 +632,16 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
     resolution = img_raw.shape[0]
     img = np.concatenate([
         img_raw[:, resolution:2*resolution], 
-        img_raw[:, 2*resolution:3*resolution],
         img_raw[:, 3*resolution:4*resolution,0:1],
-        img_raw[:, 4*resolution:5*resolution,0:1]
+        img_raw[:, 2*resolution:3*resolution]
     ], axis = -1)
     channels = img.shape[2] if img.ndim == 3 else 1
     if img.shape[1] != resolution:
         error('Input images must have the same width and height')
     if resolution != 2 ** int(np.floor(np.log2(resolution))):
         error('Input image resolution must be a power-of-two')
-    if channels not in [1, 3]:
-        error('Input images must be stored as RGB or grayscale')
+    # if channels not in [1, 3]:
+    #     error('Input images must be stored as RGB or grayscale')
     
     with TFRecordExporter(tfrecord_dir, len(image_filenames)) as tfr:
         order = tfr.choose_shuffled_order() if shuffle else np.arange(len(image_filenames))
@@ -749,6 +748,12 @@ def execute_cmdline(argv):
     p.add_argument(     '--num_tasks',      help='Number of concurrent processing tasks (default: 100)', type=int, default=100)
 
     p = add_command(    'create_from_images', 'Create dataset from a directory full of images.',
+                                            'create_from_images datasets/mydataset myimagedir')
+    p.add_argument(     'tfrecord_dir',     help='New dataset directory to be created')
+    p.add_argument(     'image_dir',        help='Directory containing the images')
+    p.add_argument(     '--shuffle',        help='Randomize image order (default: 1)', type=int, default=1)
+
+    p = add_command(    'create_from_adobe_images', 'Create dataset from a directory full of adobe images.',
                                             'create_from_images datasets/mydataset myimagedir')
     p.add_argument(     'tfrecord_dir',     help='New dataset directory to be created')
     p.add_argument(     'image_dir',        help='Directory containing the images')
