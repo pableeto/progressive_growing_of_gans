@@ -60,6 +60,9 @@ class TFRecordExporter:
         return order
 
     def add_image(self, img):
+        print(self.shape)
+        print(img.shape)
+        input()
         if self.print_progress and self.cur_images % self.progress_interval == 0:
             print('%d / %d\r' % (self.cur_images, self.expected_images), end='', flush=True)
         if self.shape is None:
