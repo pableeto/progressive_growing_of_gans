@@ -60,9 +60,6 @@ class TFRecordExporter:
         return order
 
     def add_image(self, img):
-        print(self.shape)
-        print(img.shape)
-        input()
         if self.print_progress and self.cur_images % self.progress_interval == 0:
             print('%d / %d\r' % (self.cur_images, self.expected_images), end='', flush=True)
         if self.shape is None:
@@ -631,15 +628,10 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
     if len(image_filenames) == 0:
         error('No input images found')
         
-    img_raw = np.asarray(PIL.Image.open(image_filenames[0]))
+    img = np.asarray(PIL.Image.open(image_filenames[0]))
 
-    resolution = img_raw.shape[0]
-    img = np.concatenate([
-        img_raw[:, resolution:2*resolution], 
-        img_raw[:, 3*resolution:4*resolution,0:1],
-        img_raw[:, 2*resolution:3*resolution]
-    ], axis = -1)
-    channels = img.shape[2] if img.ndim == 3 else 1
+    resolution = img.shape[0]
+    channels = 7 #if img.ndim == 3 else 1
 
     if img.shape[1] != resolution:
         error('Input images must have the same width and height')
@@ -651,7 +643,12 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
     with TFRecordExporter(tfrecord_dir, len(image_filenames)) as tfr:
         order = tfr.choose_shuffled_order() if shuffle else np.arange(len(image_filenames))
         for idx in range(order.size):
-            img = np.asarray(PIL.Image.open(image_filenames[order[idx]]))
+            img_raw = np.asarray(PIL.Image.open(image_filenames[order[idx]]))
+            img = np.concatenate([
+                img_raw[:, resolution:2*resolution], 
+                img_raw[:, 3*resolution:4*resolution,0:1],
+                img_raw[:, 2*resolution:3*resolution]
+            ], axis = -1)            
             if channels == 1:
                 img = img[np.newaxis, :, :] # HW => CHW
             else:
