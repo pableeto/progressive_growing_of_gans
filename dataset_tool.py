@@ -638,9 +638,9 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
     print(img.shape)
 
     img_1 = np.concatenate([
-        img[:, resolution:2*resolution], 
-        img[:, 3*resolution:4*resolution,0:1],
-        img[:, 2*resolution:3*resolution]
+        img[:, 0:resolution], 
+        img[:, 2*resolution:3*resolution,0:1],
+        img[:, resolution:2*resolution]
     ], axis = -1)
     cv2.imwrite('/mnt/pgan_experiments/test_0.jpg', img_1[...,0:3][...,::-1])
     cv2.imwrite('/mnt/pgan_experiments/test_1.jpg', img_1[...,3][...,::-1])
@@ -662,15 +662,10 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
         for idx in range(order.size):
             img_raw = np.asarray(PIL.Image.open(image_filenames[order[idx]]))
             img = np.concatenate([
-                img_raw[:, resolution:2*resolution], 
-                img_raw[:, 3*resolution:4*resolution,0:1],
-                img_raw[:, 2*resolution:3*resolution]
-            ], axis = -1)
-            print(img.shape)
-            cv2.imwrite('/mnt/pgan_experiments/test_0.jpg', img[...,0:3][...,::-1])
-            cv2.imwrite('/mnt/pgan_experiments/test_1.jpg', img[...,3][...,::-1])
-            cv2.imwrite('/mnt/pgan_experiments/test_2.jpg', img[...,4:7][...,::-1])
-            input()            
+                img_raw[:, 0:resolution], 
+                img_raw[:, 2*resolution:3*resolution,0:1],
+                img_raw[:, resolution:2*resolution]
+            ], axis = -1)         
             if channels == 1:
                 img = img[np.newaxis, :, :] # HW => CHW
             else:

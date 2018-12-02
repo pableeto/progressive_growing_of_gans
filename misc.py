@@ -87,9 +87,9 @@ def save_image_grid(images, filename, drange=[0,1], grid_size=None):
         image_grid_normal = image_grid[4:7,...]
 
         name, extension = os.path.splitext(filename)
-        convert_to_pil_image(image_grid, drange).save(name + r'_tex' + extension)
-        convert_to_pil_image(image_grid, drange).save(name + r'_roughness' + extension)
-        convert_to_pil_image(image_grid, drange).save(name + r'_normal' + extension)
+        convert_to_pil_image(image_grid_tex, drange).save(name + r'_tex' + extension)
+        convert_to_pil_image(image_grid_roughness, drange).save(name + r'_roughness' + extension)
+        convert_to_pil_image(image_grid_normal, drange).save(name + r'_normal' + extension)
     else:
         convert_to_pil_image(image_grid, drange).save(filename)
 
