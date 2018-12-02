@@ -633,8 +633,8 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
     resolution = img.shape[0]
     channels = 7 #if img.ndim == 3 else 1
 
-    if img.shape[1] != resolution:
-        error('Input images must have the same width and height')
+    # if img.shape[1] != resolution:
+    #     error('Input images must have the same width and height')
     if resolution != 2 ** int(np.floor(np.log2(resolution))):
         error('Input image resolution must be a power-of-two')
     # if channels not in [1, 3]:
