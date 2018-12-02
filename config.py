@@ -52,7 +52,7 @@ sched       = EasyDict()                                    # Options for train.
 grid        = EasyDict(size='1080p', layout='random')       # Options for train.setup_snapshot_image_grid().
 
 # Dataset (choose one).
-desc += '-svbrdf_128';            dataset = EasyDict(tfrecord_dir='svbrdf_128'); train.mirror_augment = True
+desc += '-prog_gan_128_svbrdf';            dataset = EasyDict(tfrecord_dir='prog_gan_128_svbrdf'); train.mirror_augment = True
 #desc += '-celeba';              dataset = EasyDict(tfrecord_dir='celeba'); train.mirror_augment = True
 #desc += '-cifar10';             dataset = EasyDict(tfrecord_dir='cifar10')
 #desc += '-cifar100';            dataset = EasyDict(tfrecord_dir='cifar100')
