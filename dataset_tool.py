@@ -651,6 +651,8 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
                 img = img[np.newaxis, :, :] # HW => CHW
             else:
                 img = img.transpose(2, 0, 1) # HWC => CHW
+            print(img.shape)
+            input()
             tfr.add_image(img)
 
 #----------------------------------------------------------------------------
