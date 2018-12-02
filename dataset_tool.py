@@ -65,7 +65,7 @@ class TFRecordExporter:
         if self.shape is None:
             self.shape = img.shape
             self.resolution_log2 = int(np.log2(self.shape[1]))
-            assert self.shape[0] in [1, 3]
+            # assert self.shape[0] in [1, 3]
             assert self.shape[1] == self.shape[2]
             assert self.shape[1] == 2**self.resolution_log2
             tfr_opt = tf.python_io.TFRecordOptions(tf.python_io.TFRecordCompressionType.NONE)
@@ -637,8 +637,6 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
         img_raw[:, 2*resolution:3*resolution]
     ], axis = -1)
     channels = img.shape[2] if img.ndim == 3 else 1
-    print(channels)
-    input()
 
     if img.shape[1] != resolution:
         error('Input images must have the same width and height')
