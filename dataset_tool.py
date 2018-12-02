@@ -629,8 +629,6 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
         error('No input images found')
         
     img = np.asarray(PIL.Image.open(image_filenames[0]))
-    print(img.shape)
-    input()
 
     resolution = img.shape[0]
     channels = 7 #if img.ndim == 3 else 1
@@ -650,7 +648,9 @@ def create_from_adobe_images(tfrecord_dir, image_dir, shuffle):
                 img_raw[:, resolution:2*resolution], 
                 img_raw[:, 3*resolution:4*resolution,0:1],
                 img_raw[:, 2*resolution:3*resolution]
-            ], axis = -1)            
+            ], axis = -1)
+            print(img.shape)
+            input()            
             if channels == 1:
                 img = img[np.newaxis, :, :] # HW => CHW
             else:
