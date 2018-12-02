@@ -81,6 +81,8 @@ def save_image(image, filename, drange=[0,1], quality=95):
 
 def save_image_grid(images, filename, drange=[0,1], grid_size=None):
     image_grid = create_image_grid(images, grid_size)
+    print(image_grid.shape)
+    input()
     if(len(image_grid.shape) == 4 and image_grid.shape[0] > 3):
         image_grid_tex = image_grid[0:3,...]
         image_grid_roughness = image_grid[3,...]
